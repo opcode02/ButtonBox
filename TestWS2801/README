@@ -1,0 +1,3 @@
+Test sketch for an 11 strand WS2801 led strip.  Note: this requires the FASTSPI_LED2 library be placed in your teensy 3.0's libary folder for arduiono, the zips for it are available here: 
+
+https://code.google.com/p/fastspi/downloads/list
