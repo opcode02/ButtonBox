@@ -27,6 +27,21 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Libraries/Bounce</name>
+			<type>2</type>
+			<locationURI>ArduinoHardwareLibPath/Bounce</locationURI>
+		</link>
+		<link>
+			<name>Libraries/Encoder</name>
+			<type>2</type>
+			<locationURI>ArduinoHardwareLibPath/Encoder</locationURI>
+		</link>
+		<link>
+			<name>Libraries/FastSPI_LED2</name>
+			<type>2</type>
+			<locationURI>ArduinoHardwareLibPath/FastSPI_LED2</locationURI>
+		</link>
+		<link>
 			<name>arduino/core</name>
 			<type>2</type>
 			<locationURI>ArduinoPlatformPath/cores/teensy3</locationURI>
