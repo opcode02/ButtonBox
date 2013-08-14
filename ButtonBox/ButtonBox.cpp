@@ -1,9 +1,15 @@
 // Do not remove the include below
 #include "ButtonBox.h"
-#include "ArcadeButtons.h"
+#include "PinDefinitions.h"
 
-ArcadeButtons gArcadeButtons;
+#include <Encoder.h>
+
+#include "Inputs.h"
+
 bool gPluginOverrideEncoder = false;
+
+Inputs gInputs;
+InputValues gInputValues;
 
 //#define PIN_ENCODER_A 1
 //#define PIN_ENCODER_B 2
@@ -12,8 +18,7 @@ bool gPluginOverrideEncoder = false;
 //CRGB leds[NUM_LEDS];
 //
 //
-//Encoder encoder = Encoder(1,2);
-
+Encoder gEncoder = Encoder(PIN_ENCODER_A,PIN_ENCODER_B);
 
 //The setup function is called once at startup of the sketch
 void setup()
@@ -24,7 +29,10 @@ void setup()
 // The loop function is called in an endless loop
 void loop()
 {
-    gArcadeButtons.update();
+    int encoderHue = gInputs.mEncoder.read() % 255;
+
+
+
 
     delay(10);
 }
