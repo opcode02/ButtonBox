@@ -26,7 +26,9 @@
     static const int PIN_MOMENTARY_RIGHT = 12;
     //13 - LED String Clock
 
+    //10 - Momentary Left
     static const int PIN_LED_STRING_DATA = 11;
+    //12 - Momentary Right
     static const int PIN_LED_STRING_CLOCK = 13;
 
     static const int PIN_SWITCH_TOP = 14;
@@ -42,12 +44,14 @@
 //    From: http://www.pjrc.com/teensy/td_pulse.html
 //    Board         PWM Capable Pins
 //    Teensy 3.0    3, 4, 5, 6, 9, 10, 20, 21, 22, 23
-    static const int PIN_BUZZER = 20;
+    static const int PIN_POWER_UP = 20;
     static const int PIN_ENCODER_RED = 21;
     static const int PIN_ENCODER_GREEN = 22;
     static const int PIN_ENCODER_BLUE = 23;
 
-
+    //Need more pins for:
+    static const int PIN_ROUND_SWITCH_LED = 24;
+    static const int PIN_BUZZER = 23;
 
 
 #endif /* PINDEFINITIONS_H_ */

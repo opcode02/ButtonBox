@@ -20,7 +20,6 @@
 							<tool id="it.baeyens.arduino.tool.sketch.compiler.cpp.1540623598" name="Arduino C++ Compiler" superClass="it.baeyens.arduino.tool.sketch.compiler.cpp">
 								<option id="it.baeyens.arduino.compiler.cpp.sketch.option.incpath.1617271306" name="Include Paths (-I)" superClass="it.baeyens.arduino.compiler.cpp.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/arduino/core}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/FastSPI_LED2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/FastSPI_LED2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Bounce}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Encoder}&quot;"/>
@@ -31,7 +30,6 @@
 							<tool id="it.baeyens.arduino.tool.compiler.c.1567636296" name="Arduino C Compiler" superClass="it.baeyens.arduino.tool.compiler.c">
 								<option id="it.baeyens.arduino.compiler.c.sketch.option.incpath.273926756" name="Include Paths (-I)" superClass="it.baeyens.arduino.compiler.c.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/arduino/core}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/FastSPI_LED2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/FastSPI_LED2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Bounce}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Encoder}&quot;"/>

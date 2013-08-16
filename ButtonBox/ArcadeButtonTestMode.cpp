@@ -22,7 +22,10 @@ void getPluginRegistration(AbstractInteractionMode::PluginRegistrations & regist
 }
 
 //This is run once per main-loop interval. All work should be done in this method.
-void step();
+void step()
+{
+
+}
 
 
 
