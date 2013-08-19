@@ -58,7 +58,7 @@ struct Inputs
 
     Bounce mRoundSwitch;
 
-    Encoder mEncoder;
+//    Encoder mEncoder;
 
     Inputs() :
         mBlueButton(PIN_BLUE_BUTTON, 10),
@@ -74,8 +74,8 @@ struct Inputs
         mGreenSwitch(PIN_GREEN_SWITCH, 10),
         mMomentaryLeft(PIN_MOMENTARY_LEFT, 10),
         mMomentaryRight(PIN_MOMENTARY_RIGHT, 10),
-        mRoundSwitch(PIN_ROUND_SWITCH, 10),
-        mEncoder(PIN_ENCODER_A,PIN_ENCODER_B)
+        mRoundSwitch(PIN_ROUND_SWITCH, 10)
+//        mEncoder(PIN_ENCODER_A,PIN_ENCODER_B)
     {
 
     }

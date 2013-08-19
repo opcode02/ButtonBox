@@ -4,10 +4,13 @@
 
 #include <Encoder.h>
 
+#include "usb_serial.h"
 #include "Inputs.h"
 #include "PinDefinitions.h"
 
 bool gPluginOverrideEncoder = false;
+
+Encoder gEncoder(PIN_ENCODER_A, PIN_ENCODER_B);
 
 Inputs gInputs;
 InputValues gInputValues;
@@ -19,11 +22,12 @@ InputValues gInputValues;
 //CRGB leds[NUM_LEDS];
 //
 //
-Encoder gEncoder = Encoder(PIN_ENCODER_A,PIN_ENCODER_B);
 
 //The setup function is called once at startup of the sketch
 void setup()
 {
+    Serial.begin(9600); //NOTE: The BAUD is ignored here, it uses the USB speed of 12Mb/s
+
     //Set PIN_POWER_UP to be an output and set to high ASAP after boot.
     //NOTE: If you want to go into 'low power mode' set this pin to low. You will be shut off.
     pinMode(PIN_POWER_UP, OUTPUT);
@@ -67,15 +71,39 @@ void setup()
     pinMode(PIN_ROUND_SWITCH, INPUT_PULLUP);
     pinMode(PIN_ENCODER_A, INPUT_PULLUP);
     pinMode(PIN_ENCODER_B, INPUT_PULLUP);
+
 }
 
 // The loop function is called in an endless loop
 void loop()
 {
-    int encoderHue = gInputs.mEncoder.read() % 255;
+    static int count = 0;
 
+    static int lastEncoderValue = 0;
+    int encoderValue = gEncoder.read();
 
+    if ( encoderValue != lastEncoderValue )
+    {
+        Serial.println("Encoder Value: ");
+        delay(10);
+        Serial.println(encoderValue);
+        lastEncoderValue = encoderValue;
+    }
 
+    if ( count == 0 )
+    {
+        digitalWrite(PIN_ENCODER_RED, HIGH);
+    }
+    else if ( count == 100 )
+    {
+        digitalWrite(PIN_ENCODER_RED, LOW);
+    }
 
     delay(10);
+
+    ++count;
+    if ( count > 200 )
+    {
+        count = 0;
+    }
 }
