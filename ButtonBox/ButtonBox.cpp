@@ -69,8 +69,8 @@ void setup()
     pinMode(PIN_SWITCH_MID_BOTTOM, INPUT_PULLUP);
     pinMode(PIN_SWITCH_BOTTOM, INPUT_PULLUP);
     pinMode(PIN_ROUND_SWITCH, INPUT_PULLUP);
-    pinMode(PIN_ENCODER_A, INPUT_PULLUP);
-    pinMode(PIN_ENCODER_B, INPUT_PULLUP);
+//    pinMode(PIN_ENCODER_A, INPUT_PULLUP);
+//    pinMode(PIN_ENCODER_B, INPUT_PULLUP);
 
 }
 
@@ -84,20 +84,31 @@ void loop()
 
     if ( encoderValue != lastEncoderValue )
     {
-        Serial.println("Encoder Value: ");
+        Serial.println("Encoder Value Changed: ");
         delay(10);
         Serial.println(encoderValue);
         lastEncoderValue = encoderValue;
     }
 
-    if ( count == 0 )
+    int ledValue = encoderValue + 128;
+    if ( ledValue < 0 )
     {
-        digitalWrite(PIN_ENCODER_RED, HIGH);
+        ledValue = 0;
     }
-    else if ( count == 100 )
+    else if ( ledValue > 255 )
     {
-        digitalWrite(PIN_ENCODER_RED, LOW);
+        ledValue = 255;
     }
+    analogWrite(PIN_ENCODER_RED, ledValue);
+
+//    if ( count == 0 )
+//    {
+//        digitalWrite(PIN_ENCODER_RED, HIGH);
+//    }
+//    else if ( count == 100 )
+//    {
+//        digitalWrite(PIN_ENCODER_RED, LOW);
+//    }
 
     delay(10);
 

@@ -44,14 +44,15 @@
 //    From: http://www.pjrc.com/teensy/td_pulse.html
 //    Board         PWM Capable Pins
 //    Teensy 3.0    3, 4, 5, 6, 9, 10, 20, 21, 22, 23
-    static const int PIN_POWER_UP = 20;
     static const int PIN_ENCODER_RED = 21;
     static const int PIN_ENCODER_GREEN = 22;
     static const int PIN_ENCODER_BLUE = 23;
 
     //Need more pins for:
     static const int PIN_ROUND_SWITCH_LED = 24;
-    static const int PIN_BUZZER = 23;
+    static const int PIN_BUZZER = 25;
+    static const int PIN_POWER_UP = 26;
+
 
 
 #endif /* PINDEFINITIONS_H_ */
