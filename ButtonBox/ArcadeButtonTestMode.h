@@ -14,10 +14,8 @@ class ArcadeButtonTestMode: public AbstractInteractionMode
 {
 public:
     ArcadeButtonTestMode();
-    ~ArcadeButtonTestMode();
 
-    //This registers the plugin for a launch color from the main encoder.
-    void getPluginRegistration(AbstractInteractionMode::PluginRegistrations & registration);
+    const char * getPluginName() { return "ArcadeButtonTestMode"; }
 
     //This is run once per main-loop interval. All work should be done in this method.
     void step();
