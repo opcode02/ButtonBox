@@ -16,14 +16,12 @@ bool gPluginOverrideEncoder = false;
 Inputs gInputs;
 InputValues gInputValues;
 
-#define NUM_LEDS 12
 CRGB gLeds[NUM_LEDS];
 
 ArcadeButtonTestMode pArcadeButtonTestMode;
 
-AbstractInteractionMode * gModes[] = { &pArcadeButtonTestMode };
-
-
+AbstractInteractionMode * gPlugins[] = { &pArcadeButtonTestMode };
+const int gNumPlugins = sizeof(gPlugins) / sizeof(AbstractInteractionMode*);
 
 //The setup function is called once at startup of the sketch
 void setup()
@@ -39,10 +37,10 @@ void setup()
     // Make sure our initial array is 0
     memset(gLeds, 0,  NUM_LEDS * sizeof(struct CRGB));
 
-    //Set PIN_POWER_UP to be an output and set to high ASAP after boot.
-    //NOTE: If you want to go into 'low power mode' set this pin to low. You will be shut off.
-    pinMode(PIN_POWER_UP, OUTPUT);
-    digitalWrite(PIN_POWER_UP, HIGH);
+    //Set PIN_LED_POWER_UP to be an output and set to high ASAP after boot.
+    //NOTE: If you want to go into 'low power mode' set this pin to low. The LEDs will be shut off (~9mA saved).
+    pinMode(PIN_LED_POWER_UP, OUTPUT);
+    digitalWrite(PIN_LED_POWER_UP, HIGH);
 
     //Configure all of our output pins to be outputs.
     pinMode(PIN_RED_SWITCH_LED, OUTPUT);
@@ -51,7 +49,6 @@ void setup()
     pinMode(PIN_ENCODER_RED, OUTPUT);
     pinMode(PIN_ENCODER_GREEN, OUTPUT);
     pinMode(PIN_ENCODER_BLUE, OUTPUT);
-    pinMode(PIN_ROUND_SWITCH_LED, OUTPUT);
     pinMode(PIN_BUZZER, OUTPUT);
 
     //Set all of our outputs (EXCEPT POWER_UP) to be off at startup
@@ -62,7 +59,6 @@ void setup()
     digitalWrite(PIN_ENCODER_RED, LOW);
     digitalWrite(PIN_ENCODER_GREEN, LOW);
     digitalWrite(PIN_ENCODER_BLUE, LOW);
-    digitalWrite(PIN_ROUND_SWITCH_LED, LOW);
     digitalWrite(PIN_BUZZER, LOW);
 
     //Set the rest of our pins to INPUT_PULLUP.
@@ -73,69 +69,87 @@ void setup()
     pinMode(PIN_YELLOW_BUTTON, INPUT_PULLUP);
     pinMode(PIN_RED_SWITCH, INPUT_PULLUP);
     pinMode(PIN_GREEN_SWITCH, INPUT_PULLUP);
-    pinMode(PIN_MOMENTARY_LEFT, INPUT_PULLUP);
-    pinMode(PIN_MOMENTARY_RIGHT, INPUT_PULLUP);
     pinMode(PIN_SWITCH_TOP, INPUT_PULLUP);
     pinMode(PIN_SWITCH_MID_TOP, INPUT_PULLUP);
     pinMode(PIN_SWITCH_MID_BOTTOM, INPUT_PULLUP);
     pinMode(PIN_SWITCH_BOTTOM, INPUT_PULLUP);
-    pinMode(PIN_ROUND_SWITCH, INPUT_PULLUP);
 
+    readInputs(gInputs, gInputValues);
+
+    for ( int index = 0; index < gNumPlugins; ++index )
+    {
+        gPlugins[index]->start();
+    }
 }
 
 // The loop function is called in an endless loop
 void loop()
 {
-    static int lastEncoderValue = 0;
-    const int numModes = 8;
-    //    const int numModes = sizeof(gModes) / sizeof(AbstractInteractionMode*);
-    static int currMode = 0;
+    bool redSwitchLED(false);
+    bool greenSwitchLED(false);
+    bool blueSwitchLED(false);
+    int buzzerFrequency(-1);
+    CRGB encoderLED; //This should really be pre-allocated externally and not allocated on the stack every time
+    memset((void*)&encoderLED, 0, sizeof(encoderLED)); //This has to happen every loop
+    memset((void*)&gLeds, 0, sizeof(gLeds)); //This has to happen every loop
 
-    int encoderValue = gInputs.mEncoder.read();
-    if ( encoderValue >= lastEncoderValue + 3 )
-    {
-        lastEncoderValue = encoderValue;
-        currMode++;
-    }
-    else if ( encoderValue <= lastEncoderValue - 3 )
-    {
-        lastEncoderValue = encoderValue;
-        currMode--;
-    }
+    readInputs(gInputs, gInputValues);
 
-    if ( currMode >= numModes )
+    //Loop through all plugins and allow them to update their internal states for output.
+    for ( int index = 0; index < gNumPlugins; ++index )
     {
-        currMode = 0;
-    }
-    else if ( currMode < 0 )
-    {
-        currMode = numModes - 1;
+        gPlugins[index]->step();
     }
 
-
-    for ( int offset = 0; offset < 8; ++offset )
+    //Loop through all plugins and determine our outputs
+    for ( int index = 0; index < gNumPlugins; ++index )
     {
-        if ( ((0x1 << offset) & currMode) )
+        AbstractInteractionMode::PluginOptions options;
+        gPlugins[index]->getPluginOptions(options);
+        switch ( options.mPluginComposition )
         {
-            gLeds[offset] = CRGB(128,0,128);
+        case AbstractInteractionMode::CompositeAdditive:
+            encoderLED += gPlugins[index]->encoderLed();
+            for ( int ledIndex = 0; ledIndex < NUM_LEDS; ++ledIndex )
+            {
+                gLeds[ledIndex] += gPlugins[index]->ledBuffer()[ledIndex];
+            }
+            break;
+        case AbstractInteractionMode::CompositeSubtractive:
+            encoderLED -= gPlugins[index]->encoderLed();
+            for ( int ledIndex = 0; ledIndex < NUM_LEDS; ++ledIndex )
+            {
+                gLeds[ledIndex] -= gPlugins[index]->ledBuffer()[ledIndex];
+            }
+            break;
         }
-        else
+
+        redSwitchLED |= gPlugins[index]->redSwitchLed();
+        greenSwitchLED |= gPlugins[index]->greenSwitchLed();
+        blueSwitchLED |= gPlugins[index]->blueSwitchLed();
+
+        int pluginBuzzer = gPlugins[index]->buzzerFrequency();
+        if ( pluginBuzzer > buzzerFrequency )
         {
-            gLeds[offset] = CRGB(0,0,0);
+            buzzerFrequency = pluginBuzzer;
         }
     }
+
+    //Actually set our outputs to our composited values
     LEDS.show();
 
-    int ledValue = encoderValue + 128;
-    if ( ledValue < 0 )
+    analogWrite(PIN_ENCODER_RED, encoderLED.red);
+    analogWrite(PIN_ENCODER_GREEN, encoderLED.green);
+    analogWrite(PIN_ENCODER_BLUE, encoderLED.blue);
+
+    if ( buzzerFrequency >= 0 )
     {
-        ledValue = 0;
+        tone(PIN_BUZZER, buzzerFrequency );
     }
-    else if ( ledValue > 255 )
+    else
     {
-        ledValue = 255;
+        noTone(PIN_BUZZER);
     }
-    analogWrite(PIN_ENCODER_RED, ledValue);
 
     delay(10);
 }

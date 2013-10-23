@@ -29,11 +29,6 @@ struct InputValues
     bool mBlueSwitch;
     bool mGreenSwitch;
 
-    bool mMomentaryLeft;
-    bool mMomentaryRight;
-
-    bool mRoundSwitch;
-
     int mEncoderPosition;
 };
 
@@ -53,11 +48,6 @@ struct Inputs
     Bounce mBlueSwitch;
     Bounce mGreenSwitch;
 
-    Bounce mMomentaryLeft;
-    Bounce mMomentaryRight;
-
-    Bounce mRoundSwitch;
-
     Encoder mEncoder;
 
     Inputs() :
@@ -72,14 +62,45 @@ struct Inputs
         mRedSwitch(PIN_RED_SWITCH, 10),
         mBlueSwitch(PIN_BLUE_SWITCH, 10),
         mGreenSwitch(PIN_GREEN_SWITCH, 10),
-        mMomentaryLeft(PIN_MOMENTARY_LEFT, 10),
-        mMomentaryRight(PIN_MOMENTARY_RIGHT, 10),
-        mRoundSwitch(PIN_ROUND_SWITCH, 10),
         mEncoder(PIN_ENCODER_A,PIN_ENCODER_B)
     {
 
     }
 
 };
+
+static void readInputs(Inputs & inputs, InputValues & inputValues)
+{
+    inputs.mBlueButton.update();
+    inputs.mPinkButton.update();
+    inputs.mGreenButton.update();
+    inputs.mYellowButton.update();
+
+    inputs.mSwitchTop.update();
+    inputs.mSwitchMidTop.update();
+    inputs.mSwitchMidBottom.update();
+    inputs.mSwitchBottom.update();
+
+    inputs.mRedSwitch.update();
+    inputs.mBlueSwitch.update();
+    inputs.mGreenSwitch.update();
+
+
+    inputValues.mBlueButton = inputs.mBlueButton.read();
+    inputValues.mPinkButton = inputs.mPinkButton.read();
+    inputValues.mGreenButton = inputs.mGreenButton.read();
+    inputValues.mYellowButton = inputs.mYellowButton.read();
+
+    inputValues.mSwitchTop = inputs.mSwitchTop.read();
+    inputValues.mSwitchMidTop = inputs.mSwitchMidTop.read();
+    inputValues.mSwitchMidBottom = inputs.mSwitchMidBottom.read();
+    inputValues.mSwitchBottom = inputs.mSwitchBottom.read();
+
+    inputValues.mRedSwitch = inputs.mRedSwitch.read();
+    inputValues.mBlueSwitch = inputs.mBlueSwitch.read();
+    inputValues.mGreenSwitch = inputs.mGreenSwitch.read();
+
+    inputValues.mEncoderPosition = inputs.mEncoder.read();
+}
 
 #endif /* INPUTS_H_ */
