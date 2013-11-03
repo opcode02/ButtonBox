@@ -13,15 +13,17 @@
     static const int PIN_BLUE_BUTTON = 0;
     static const int PIN_PINK_BUTTON = 1;
     static const int PIN_GREEN_BUTTON = 2;
-    static const int PIN_YELLOW_BUTTON = 3;
 
-    static const int PIN_RED_SWITCH = 4;
-    static const int PIN_GREEN_SWITCH = 5;
+    static const int PIN_RED_SWITCH_LED = 3;
+    static const int PIN_GREEN_SWITCH_LED = 4;
+    static const int PIN_BLUE_SWITCH_LED = 5;
+
     static const int PIN_BLUE_SWITCH = 6;
 
-    static const int PIN_RED_SWITCH_LED = 7;
-    static const int PIN_GREEN_SWITCH_LED = 8;
-    static const int PIN_BLUE_SWITCH_LED = 9;
+    static const int PIN_YELLOW_BUTTON = 7;
+
+    static const int PIN_RED_SWITCH = 8;
+    static const int PIN_GREEN_SWITCH = 9;
 
     static const int PIN_BUZZER = 10;
     static const int PIN_LED_STRING_DATA = 11;
