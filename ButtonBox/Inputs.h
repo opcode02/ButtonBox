@@ -20,10 +20,14 @@ struct InputValues
     bool mGreenButton;
     bool mYellowButton;
 
-    bool mSwitchTop;
-    bool mSwitchMidTop;
-    bool mSwitchMidBottom;
-    bool mSwitchBottom;
+    bool mSwitch0;
+    bool mSwitch1;
+    bool mSwitch2;
+    bool mSwitch3;
+    bool mSwitch4;
+    bool mSwitch5;
+
+    bool mEncoderButton;
 
     bool mRedSwitch;
     bool mBlueSwitch;
@@ -39,10 +43,14 @@ struct Inputs
     Bounce mGreenButton;
     Bounce mYellowButton;
 
-    Bounce mSwitchTop;
-    Bounce mSwitchMidTop;
-    Bounce mSwitchMidBottom;
-    Bounce mSwitchBottom;
+    Bounce mSwitch0;
+    Bounce mSwitch1;
+    Bounce mSwitch2;
+    Bounce mSwitch3;
+    Bounce mSwitch4;
+    Bounce mSwitch5;
+
+    Bounce mEncoderButton;
 
     Bounce mRedSwitch;
     Bounce mBlueSwitch;
@@ -55,10 +63,13 @@ struct Inputs
         mPinkButton(PIN_PINK_BUTTON, 10),
         mGreenButton(PIN_GREEN_BUTTON, 10),
         mYellowButton(PIN_YELLOW_BUTTON, 10),
-        mSwitchTop(PIN_SWITCH_TOP, 10),
-        mSwitchMidTop(PIN_SWITCH_MID_TOP, 10),
-        mSwitchMidBottom(PIN_SWITCH_MID_BOTTOM, 10),
-        mSwitchBottom(PIN_SWITCH_BOTTOM, 10),
+        mSwitch0(PIN_SWITCH_0, 10),
+        mSwitch1(PIN_SWITCH_1, 10),
+        mSwitch2(PIN_SWITCH_2, 10),
+        mSwitch3(PIN_SWITCH_3, 10),
+        mSwitch4(PIN_SWITCH_4, 10),
+        mSwitch5(PIN_SWITCH_5, 10),
+        mEncoderButton(PIN_ENCODER_BUTTON, 10),
         mRedSwitch(PIN_RED_SWITCH, 10),
         mBlueSwitch(PIN_BLUE_SWITCH, 10),
         mGreenSwitch(PIN_GREEN_SWITCH, 10),
@@ -76,25 +87,33 @@ static void readInputs(Inputs & inputs, InputValues & inputValues)
     inputs.mGreenButton.update();
     inputs.mYellowButton.update();
 
-    inputs.mSwitchTop.update();
-    inputs.mSwitchMidTop.update();
-    inputs.mSwitchMidBottom.update();
-    inputs.mSwitchBottom.update();
+    inputs.mSwitch0.update();
+    inputs.mSwitch1.update();
+    inputs.mSwitch2.update();
+    inputs.mSwitch3.update();
+    inputs.mSwitch4.update();
+    inputs.mSwitch5.update();
+
+    inputs.mEncoderButton.update();
 
     inputs.mRedSwitch.update();
     inputs.mBlueSwitch.update();
     inputs.mGreenSwitch.update();
 
 
-    inputValues.mBlueButton = inputs.mBlueButton.read();
-    inputValues.mPinkButton = inputs.mPinkButton.read();
-    inputValues.mGreenButton = inputs.mGreenButton.read();
-    inputValues.mYellowButton = inputs.mYellowButton.read();
+    inputValues.mBlueButton = !inputs.mBlueButton.read();
+    inputValues.mPinkButton = !inputs.mPinkButton.read();
+    inputValues.mGreenButton = !inputs.mGreenButton.read();
+    inputValues.mYellowButton = !inputs.mYellowButton.read();
 
-    inputValues.mSwitchTop = inputs.mSwitchTop.read();
-    inputValues.mSwitchMidTop = inputs.mSwitchMidTop.read();
-    inputValues.mSwitchMidBottom = inputs.mSwitchMidBottom.read();
-    inputValues.mSwitchBottom = inputs.mSwitchBottom.read();
+    inputValues.mSwitch0 = !inputs.mSwitch0.read();
+    inputValues.mSwitch1 = !inputs.mSwitch1.read();
+    inputValues.mSwitch2 = !inputs.mSwitch2.read();
+    inputValues.mSwitch3 = !inputs.mSwitch3.read();
+    inputValues.mSwitch4 = !inputs.mSwitch4.read();
+    inputValues.mSwitch5 = !inputs.mSwitch5.read();
+
+    inputValues.mEncoderButton = inputs.mEncoderButton.read();
 
     inputValues.mRedSwitch = inputs.mRedSwitch.read();
     inputValues.mBlueSwitch = inputs.mBlueSwitch.read();

@@ -28,10 +28,10 @@
     static const int PIN_LED_POWER_UP = 12;
     static const int PIN_LED_STRING_CLOCK = 13;
 
-    static const int PIN_SWITCH_TOP = 14;
-    static const int PIN_SWITCH_MID_TOP = 15;
-    static const int PIN_SWITCH_MID_BOTTOM = 16;
-    static const int PIN_SWITCH_BOTTOM = 17;
+    static const int PIN_SWITCH_0 = 24;//14
+    static const int PIN_SWITCH_1 = 25;//15
+    static const int PIN_SWITCH_2 = 17;//16
+    static const int PIN_SWITCH_3 = 15;//17
 
     static const int PIN_ENCODER_A = 18;
     static const int PIN_ENCODER_B = 19;
@@ -42,6 +42,10 @@
     static const int PIN_ENCODER_RED = 20;
     static const int PIN_ENCODER_GREEN = 21;
     static const int PIN_ENCODER_BLUE = 22;
+
+    static const int PIN_ENCODER_BUTTON = 23;
+    static const int PIN_SWITCH_4 = 16;//24
+    static const int PIN_SWITCH_5 = 14;//25
 
 
 #endif /* PINDEFINITIONS_H_ */
