@@ -5,10 +5,10 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="it.baeyens.arduino.core.toolChain.release.597128880" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<externalSettings/>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -24,6 +24,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Bounce}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Encoder}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Encoder/utility}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/LowPower}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/LowPower_Teensy3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/LowPower_Teensy3/utility}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.arduino.compiler.cpp.sketch.input.852135225" name="CPP source files" superClass="it.baeyens.arduino.compiler.cpp.sketch.input"/>
 							</tool>
@@ -34,6 +37,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Bounce}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Encoder}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/Encoder/utility}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/LowPower}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/LowPower_Teensy3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ButtonBox/Libraries/LowPower_Teensy3/utility}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.arduino.compiler.c.sketch.input.1857250143" name="C Source Files" superClass="it.baeyens.arduino.compiler.c.sketch.input"/>
 							</tool>

@@ -42,6 +42,11 @@
 			<locationURI>ArduinoHardwareLibPath/FastSPI_LED2</locationURI>
 		</link>
 		<link>
+			<name>Libraries/LowPower_Teensy3</name>
+			<type>2</type>
+			<locationURI>ArduinoPivateLibPath/LowPower_Teensy3</locationURI>
+		</link>
+		<link>
 			<name>arduino/core</name>
 			<type>2</type>
 			<locationURI>ArduinoPlatformPath/cores/teensy3</locationURI>
@@ -50,15 +55,15 @@
 	<variableList>
 		<variable>
 			<name>ArduinoHardwareLibPath</name>
-			<value>file:/C:/Arduino/hardware/teensy/all/libraries</value>
+			<value>file:/C:/Users/Ryan/Desktop/ButtonBox/Arduino/hardware/teensy/all/libraries</value>
 		</variable>
 		<variable>
 			<name>ArduinoPinPath</name>
-			<value>file:/C:/Arduino/hardware/teensy/all/variants</value>
+			<value>file:/C:/Users/Ryan/Desktop/ButtonBox/Arduino/hardware/teensy/all/variants</value>
 		</variable>
 		<variable>
 			<name>ArduinoPlatformPath</name>
-			<value>file:/C:/Arduino/hardware/teensy/all</value>
+			<value>file:/C:/Users/Ryan/Desktop/ButtonBox/Arduino/hardware/teensy/all</value>
 		</variable>
 	</variableList>
 </projectDescription>

@@ -1,27 +1,32 @@
 /*
- * ArcadeButtonTestMode.cpp
+ * ArcadeButtonActions.cpp
  *
  *  Created on: Aug 12, 2013
  *      Author: Ryan
  */
 
 
-#include "ArcadeButtonTestMode.h"
+#include "ArcadeButtonActions.h"
 
-ArcadeButtonTestMode::ArcadeButtonTestMode() : AbstractInteractionMode()
+ArcadeButtonActions::ArcadeButtonActions() : AbstractInteractionMode()
 {
 }
 
 //This is run once per main-loop interval. All work should be done in this method.
-void ArcadeButtonTestMode::step()
+void ArcadeButtonActions::step()
 {
     memset((void*)&mLedBuffer, 0, sizeof(mLedBuffer));
+    mRedSwitchLED = false;
+    mGreenSwitchLED = false;
+    mBlueSwitchLED = false;
 
     if ( gInputValues.mBlueButton )
     {
         mLedBuffer[3].blue = 255;
         mLedBuffer[4].blue = 255;
         mLedBuffer[5].blue = 255;
+
+        mBlueSwitchLED = true;
     }
 
     if ( gInputValues.mGreenButton )
@@ -29,6 +34,8 @@ void ArcadeButtonTestMode::step()
         mLedBuffer[6].green = 255;
         mLedBuffer[7].green = 255;
         mLedBuffer[8].green = 255;
+
+        mGreenSwitchLED = true;
     }
 
     if ( gInputValues.mPinkButton )
@@ -36,6 +43,8 @@ void ArcadeButtonTestMode::step()
         mLedBuffer[0].setRGB(255, 50, 50);
         mLedBuffer[1].setRGB(255, 50, 50);
         mLedBuffer[2].setRGB(255, 50, 50);
+
+        mRedSwitchLED = true;
     }
 
     if ( gInputValues.mYellowButton )

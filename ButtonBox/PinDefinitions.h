@@ -8,6 +8,7 @@
 #ifndef PINDEFINITIONS_H_
 #define PINDEFINITIONS_H_
 
+    static const int NUM_INACTIVE_CYCLES_SLEEP = 30000;// n * ~10ms -- 5 Minutes (This may be reduced after development)
     static const int NUM_LEDS = 12;
 
     static const int PIN_BLUE_BUTTON = 0;

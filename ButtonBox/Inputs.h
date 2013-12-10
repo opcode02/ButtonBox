@@ -34,6 +34,29 @@ struct InputValues
     bool mGreenSwitch;
 
     int mEncoderPosition;
+
+    inline bool operator==(const InputValues& rhs)
+    {
+        bool equal = true;
+        equal &= (mBlueButton == rhs.mBlueButton);
+        equal &= (mPinkButton == rhs.mPinkButton);
+        equal &= (mGreenButton == rhs.mGreenButton);
+        equal &= (mYellowButton == rhs.mYellowButton);
+        equal &= (mSwitch0 == rhs.mSwitch0);
+        equal &= (mSwitch1 == rhs.mSwitch1);
+        equal &= (mSwitch2 == rhs.mSwitch2);
+        equal &= (mSwitch3 == rhs.mSwitch3);
+        equal &= (mSwitch4 == rhs.mSwitch4);
+        equal &= (mSwitch5 == rhs.mSwitch5);
+        equal &= (mEncoderButton == rhs.mEncoderButton);
+        equal &= (mRedSwitch == rhs.mRedSwitch);
+        equal &= (mBlueSwitch == rhs.mBlueSwitch);
+        equal &= (mGreenSwitch == rhs.mGreenSwitch);
+        equal &= (mEncoderPosition == rhs.mEncoderPosition);
+        return equal;
+    }
+    inline bool operator!=(const InputValues& rhs) { return !operator==(rhs); }
+
 };
 
 struct Inputs

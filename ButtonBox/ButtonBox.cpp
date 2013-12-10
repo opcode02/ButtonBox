@@ -4,6 +4,7 @@
 
 #include <Encoder.h>
 #include <FastSPI_LED2.h>
+#include <LowPower_Teensy3.h>
 
 #include "usb_serial.h"
 #include "Inputs.h"
@@ -20,11 +21,13 @@ InputValues gInputValues;
 
 CRGB gLeds[NUM_LEDS];
 
-ArcadeButtonTestMode pArcadeButtonTestMode;
+ArcadeButtonActions pArcadeButtonTestMode;
 RgbEncoderActions pRgbEncoderActions;
 
 AbstractInteractionMode * gPlugins[] = { &pArcadeButtonTestMode, &pRgbEncoderActions };
 const int gNumPlugins = sizeof(gPlugins) / sizeof(AbstractInteractionMode*);
+
+TEENSY3_LP gLowPower = TEENSY3_LP();
 
 //The setup function is called once at startup of the sketch
 void setup()
@@ -93,6 +96,10 @@ void setup()
 // The loop function is called in an endless loop
 void loop()
 {
+    int inactivityCount = 0;
+    InputValues lastInputValues;
+    memset((void*)&lastInputValues, 0, sizeof(lastInputValues));
+
     tone(PIN_BUZZER, 660, 100);
     delay(150);
     tone(PIN_BUZZER, 660, 100);
@@ -108,42 +115,6 @@ void loop()
     tone(PIN_BUZZER, 380, 100);
     delay(100);
     noTone(PIN_BUZZER);
-
-//
-//    analogWrite(PIN_ENCODER_RED, 100);
-//    analogWrite(PIN_ENCODER_GREEN, 0);
-//    analogWrite(PIN_ENCODER_BLUE, 0);
-//
-//    digitalWrite(PIN_RED_SWITCH_LED, true);
-//    digitalWrite(PIN_GREEN_SWITCH_LED, true);
-//    digitalWrite(PIN_BLUE_SWITCH_LED, true);
-
-//    while (1)
-//    {
-//        for ( int hue = 0; hue < 255; ++hue )
-//        {
-//            memset(gLeds, 0,  NUM_LEDS * sizeof(struct CRGB));
-//            for(int iLed = 0; iLed < NUM_LEDS; iLed++)
-//            {
-//
-//                int hueOffset = iLed * (128 / NUM_LEDS);
-//
-//                int ledHue = (hue + hueOffset) % 255;
-//
-//                gLeds[iLed].setHSV(ledHue, 255, 255);
-//            }
-//
-//            // and now, show your led array!
-//            LEDS.show();
-//
-//            analogWrite(PIN_ENCODER_RED, gLeds[0].red);
-//            analogWrite(PIN_ENCODER_GREEN, gLeds[0].green);
-//            analogWrite(PIN_ENCODER_BLUE, gLeds[0].blue);
-//
-//            delay(50);
-//        }
-//    }
-
 
     while (1)
     {
@@ -204,6 +175,10 @@ void loop()
         analogWrite(PIN_ENCODER_GREEN, encoderLED.green);
         analogWrite(PIN_ENCODER_BLUE, encoderLED.blue);
 
+        digitalWrite(PIN_RED_SWITCH_LED, redSwitchLED);
+        digitalWrite(PIN_GREEN_SWITCH_LED, greenSwitchLED);
+        digitalWrite(PIN_BLUE_SWITCH_LED, blueSwitchLED);
+
         if ( buzzerFrequency >= 0 )
         {
             tone(PIN_BUZZER, buzzerFrequency );
@@ -211,6 +186,47 @@ void loop()
         else
         {
             noTone(PIN_BUZZER);
+        }
+
+        if ( lastInputValues != gInputValues )
+        {
+            inactivityCount = 0;
+            lastInputValues = gInputValues;
+        }
+        else
+        {
+            inactivityCount++;
+        }
+
+        if ( inactivityCount > NUM_INACTIVE_CYCLES_SLEEP )
+        {
+            //Outputs remain what they are set to in Deep Sleep. Make sure our outputs are all set to off.
+            analogWrite(PIN_ENCODER_RED, 0);
+            analogWrite(PIN_ENCODER_GREEN, 0);
+            analogWrite(PIN_ENCODER_BLUE, 0);
+
+            digitalWrite(PIN_RED_SWITCH_LED, LOW);
+            digitalWrite(PIN_GREEN_SWITCH_LED, LOW);
+            digitalWrite(PIN_BLUE_SWITCH_LED, LOW);
+
+            noTone(PIN_BUZZER);
+
+            memset((void*)&gLeds, 0, sizeof(gLeds));
+            LEDS.show();
+
+            //Delaying here seems to help get the LEDs to turn off
+            delay(100);
+
+            LEDS.clear(false);
+
+            *portConfigRegister(PIN_LED_POWER_UP) = PORT_PCR_MUX(1) | PORT_PCR_PE; //PULLDOWN
+
+            gLowPower.DeepSleep(GPIO_WAKE, PIN_2);
+
+            inactivityCount = 0;
+
+            digitalWrite(PIN_LED_POWER_UP, HIGH);
+            LEDS.show();
         }
 
         delay(10);
