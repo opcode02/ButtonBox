@@ -11,7 +11,7 @@
 #include "PinDefinitions.h"
 #include "AbstractInteractionMode.h"
 
-#include "ArcadeButtonTestMode.h"
+#include "ArcadeButtonActions.h"
 #include "RgbEncoderActions.h"
 
 bool gPluginOverrideEncoder = false;
