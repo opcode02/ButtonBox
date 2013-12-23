@@ -19,6 +19,9 @@ public:
 
     //This is run once per main-loop interval. All work should be done in this method.
     void step();
+
+private:
+    int  mRainbowHue;
 };
 
 #endif /* ARCADEBUTTONACTIONS_H_ */

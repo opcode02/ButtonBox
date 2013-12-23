@@ -13,6 +13,7 @@
 
 #include "ArcadeButtonActions.h"
 #include "RgbEncoderActions.h"
+#include "ColorSwitchActions.h"
 
 bool gPluginOverrideEncoder = false;
 
@@ -23,11 +24,14 @@ CRGB gLeds[NUM_LEDS];
 
 ArcadeButtonActions pArcadeButtonTestMode;
 RgbEncoderActions pRgbEncoderActions;
+ColorSwitchActions pColorSwitchActions;
 
-AbstractInteractionMode * gPlugins[] = { &pArcadeButtonTestMode, &pRgbEncoderActions };
+AbstractInteractionMode * gPlugins[] = { &pArcadeButtonTestMode, &pRgbEncoderActions, &pColorSwitchActions };
 const int gNumPlugins = sizeof(gPlugins) / sizeof(AbstractInteractionMode*);
 
 TEENSY3_LP gLowPower = TEENSY3_LP();
+
+int mLastBuzzerFrequency;
 
 //The setup function is called once at startup of the sketch
 void setup()
@@ -102,26 +106,27 @@ void loop()
 
     tone(PIN_BUZZER, 660, 100);
     delay(150);
-    tone(PIN_BUZZER, 660, 100);
-    delay(300);
-    tone(PIN_BUZZER, 660, 100);
-    delay(300);
-    tone(PIN_BUZZER, 510, 100);
-    delay(150);
-    tone(PIN_BUZZER, 660, 100);
-    delay(300);
-    tone(PIN_BUZZER, 770, 100);
-    delay(550);
-    tone(PIN_BUZZER, 380, 100);
-    delay(100);
+//    tone(PIN_BUZZER, 660, 100);
+//    delay(300);
+//    tone(PIN_BUZZER, 660, 100);
+//    delay(300);
+//    tone(PIN_BUZZER, 510, 100);
+//    delay(150);
+//    tone(PIN_BUZZER, 660, 100);
+//    delay(300);
+//    tone(PIN_BUZZER, 770, 100);
+//    delay(550);
+//    tone(PIN_BUZZER, 380, 100);
+//    delay(100);
     noTone(PIN_BUZZER);
+    mLastBuzzerFrequency = 0;
 
     while (1)
     {
         bool redSwitchLED(false);
         bool greenSwitchLED(false);
         bool blueSwitchLED(false);
-        int buzzerFrequency(-1);
+        int buzzerFrequency(0);
         CRGB encoderLED; //This should really be pre-allocated externally and not allocated on the stack every time
         memset((void*)&encoderLED, 0, sizeof(encoderLED)); //This has to happen every loop
         memset((void*)&gLeds, 0, sizeof(gLeds)); //This has to happen every loop
@@ -179,13 +184,18 @@ void loop()
         digitalWrite(PIN_GREEN_SWITCH_LED, greenSwitchLED);
         digitalWrite(PIN_BLUE_SWITCH_LED, blueSwitchLED);
 
-        if ( buzzerFrequency >= 0 )
+        if ( buzzerFrequency > 0 )
         {
-            tone(PIN_BUZZER, buzzerFrequency );
+            if ( buzzerFrequency != mLastBuzzerFrequency )
+            {
+                tone(PIN_BUZZER, buzzerFrequency );
+                mLastBuzzerFrequency = buzzerFrequency;
+            }
         }
         else
         {
             noTone(PIN_BUZZER);
+            mLastBuzzerFrequency = 0;
         }
 
         if ( lastInputValues != gInputValues )
@@ -210,6 +220,7 @@ void loop()
             digitalWrite(PIN_BLUE_SWITCH_LED, LOW);
 
             noTone(PIN_BUZZER);
+            mLastBuzzerFrequency = 0;
 
             memset((void*)&gLeds, 0, sizeof(gLeds));
             LEDS.show();

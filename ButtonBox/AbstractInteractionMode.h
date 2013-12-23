@@ -30,7 +30,7 @@ public:
         mRedSwitchLED(false),
         mGreenSwitchLED(false),
         mBlueSwitchLED(false),
-        mBuzzerFrequency(-1)
+        mBuzzerFrequency(0)
     {
         memset((void*)&mEncoderLed, 0, sizeof(mEncoderLed));
         memset((void*)&mLedBuffer, 0, sizeof(mLedBuffer));
