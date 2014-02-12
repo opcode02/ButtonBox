@@ -50,7 +50,17 @@ void ColorSwitchActions::step()
             mLedBuffer[(mLEDIndex + 5) % NUM_LEDS].setRGB(0, 0, 16);
         }
 
-        if ( gInputValues.mRedSwitch || gInputValues.mGreenSwitch || gInputValues.mBlueSwitch )
+        if ( gInputValues.mSwitch0 )
+        {
+            int bouncingLEDIndex = (mLEDIndex) % (NUM_LEDS * 2);
+            if ( bouncingLEDIndex >= 12 )
+            {
+                bouncingLEDIndex = 11 - ((mLEDIndex) % (NUM_LEDS));
+            }
+            mLedBuffer[bouncingLEDIndex].setRGB(255, 255, 255);
+        }
+
+        if ( gInputValues.mRedSwitch || gInputValues.mGreenSwitch || gInputValues.mBlueSwitch || gInputValues.mSwitch0)
         {
             mLEDIndex++;
         }
